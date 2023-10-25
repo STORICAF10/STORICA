@@ -1,30 +1,32 @@
 {% extends 'base.html' %}
 
 {% block meta %}
-<title>{{ buku.judul }}</title>
+    <title>{{ buku.judul }}</title>
 {% endblock meta %}
 
 {% block content %}
 <div class="container mt-4">
     <div class="row justify-content-center">
-        <div class="card text-center">
+        <div class="card book-card" style="background-color: rgba(92, 91, 91, 0.315);">
             <div class="card-header">
                 <ul class="nav nav-tabs card-header-tabs">
                     <li class="nav-item">
-                        <a class="nav-link active" href="#">Baca</a>
+                        <a class="nav-link active" href="{% url 'modul_preview:show_bacaan' buku.pk %}" style="background-color: burlywood; color: white;"><b>Baca</b></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="#">Komentar</a>
+                        <a class="nav-link" href="{% url 'modul_baca:show_create_komentar' buku.pk %}" tabindex="-1" style="color: gray;"><b>Komentar</b></a>
                     </li>
                 </ul>
             </div>
             <div class="card-body">
-                <h2 class="card-title">{{ buku.judul }}</h2>
-                <p class="card-text">{{ buku.isi_buku }}</p>
+                <h3 class="card-title text-center" style="margin-bottom: 6vh; margin-inline: 14vh; color: white;"><b>{{ buku.judul }}</b></h3>
+                <p class="card-text">
+                    <textarea class="form-control" style="text-align: justify; resize: none; height: 55vh;" readonly>{{ buku.isi_buku }}</textarea>
+                </p>
             </div>
         </div>
     </div>
-    <a href="{% url 'main:show_preview' buku.pk %}" class="btn btn-primary">Back to Preview</a>
-    <!-- <a href="#" class="btn btn-primary">Next Page</a> -->
+        <a href="{% url 'main:show_preview' buku.pk %}" class="btn btn-primary mt-3"
+        style="background-color: burlywood; margin-bottom: 8vh;"><b>⏪ Back to Preview</b></a>
 </div>
 {% endblock content %}
