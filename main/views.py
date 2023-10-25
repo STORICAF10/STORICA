@@ -18,7 +18,7 @@ from django.urls import reverse
 
 @login_required(login_url='/login')
 def show_main(request):
-    bukus = Buku.objects.filter(user=request.user)
+    bukus = Buku.objects.all()
 
     context = {
         'name': request.user.username,
