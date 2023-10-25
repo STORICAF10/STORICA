@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'main',
+    'modul_baca',
+    'modul_preview'
 ]
 
 MIDDLEWARE = [

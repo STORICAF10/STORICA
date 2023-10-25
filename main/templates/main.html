@@ -8,7 +8,9 @@
         {% for buku in bukus %}
         <div class="col-lg-2 col-md-3 col-sm-4 col-6 mb-4">
             <div class="card">
-                <img src="{{ buku.gambar }}" alt="{{ buku.judul }}" class="card-img-top">
+                <a href="{% url 'main:show_preview' buku.pk %}">
+                    <img src="{{ buku.gambar }}" alt="{{ buku.judul }}" class="card-img-top">
+                </a>
                 <div class="card-body">
                     <h5 class="card-title">{{ buku.judul }}</h5>
                     <p class="card-text">Author: {{ buku.penulis }}</p>

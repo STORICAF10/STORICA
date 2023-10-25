@@ -125,3 +125,11 @@ def delete_buku(request, id):
     buku.delete()
     # Kembali ke halaman awal
     return HttpResponseRedirect(reverse('main:show_main'))
+
+
+def show_preview(request, id):
+    buku = Buku.objects.get(pk = id)
+    context = {
+        'buku': buku,
+    }
+    return render(request, "preview.html", context)

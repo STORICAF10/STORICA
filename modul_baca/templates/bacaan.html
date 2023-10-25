@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block meta %}
+<title>{{ buku.judul }}</title>
+{% endblock meta %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="card text-center">
+            <div class="card-header">
+                <ul class="nav nav-tabs card-header-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Baca</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Komentar</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="card-body">
+                <h2 class="card-title">{{ buku.judul }}</h2>
+                <p class="card-text">{{ buku.isi_buku }}</p>
+            </div>
+        </div>
+    </div>
+    <a href="{% url 'main:show_preview' buku.pk %}" class="btn btn-primary">Back to Preview</a>
+    <!-- <a href="#" class="btn btn-primary">Next Page</a> -->
+</div>
+{% endblock content %}
