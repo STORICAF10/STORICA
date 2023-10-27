@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from main.models import Buku
+from main.models import *
 from main.forms import BukuForm
 from django.urls import reverse
 from django.http import HttpResponse
@@ -18,7 +18,10 @@ from django.urls import reverse
 
 @login_required(login_url='/login')
 def show_main(request):
+    dicoba = BukuKreasi.objects.all()
     bukus = Buku.objects.all()
+    if len(dicoba) != 0:
+        bukus += dicoba
 
     context = {
         'name': request.user.username,

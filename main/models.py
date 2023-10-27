@@ -9,7 +9,7 @@ class Buku(models.Model):
     penerbit = models.CharField(max_length=255, null=True, blank=True)
     jumlah_review = models.PositiveIntegerField(null=True, blank=True)
     rating = models.DecimalField(max_digits=3, decimal_places=2, null=True, blank=True)
-    gambar = models.ImageField(default="default_cover.png", null=True, blank=True)
+    gambar = models.URLField(null=True, blank=True)
     tanggal_terbit = models.DateField(null=True, blank=True)
 
 class BukuKreasi(models.Model):
@@ -21,7 +21,7 @@ class BukuKreasi(models.Model):
     penerbit = models.CharField(max_length=255, null=True, blank=True)
     jumlah_review = models.PositiveIntegerField(null=True, blank=True)
     rating = models.DecimalField(max_digits=3, decimal_places=2, null=True, blank=True)
-    gambar = models.ImageField(default="default_cover.png", null=True, blank=True)
+    gambar = models.URLField(null=True, blank=True)
     tanggal_terbit = models.DateField(null=True, blank=True)
     is_published = models.BooleanField()
     isi_buku = models.TextField(null="",blank="")
