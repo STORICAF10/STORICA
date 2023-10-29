@@ -14,25 +14,34 @@ from django.contrib.auth.decorators import login_required
 import datetime
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.views.decorators.csrf import csrf_exempt
+from django.http import HttpResponseNotFound
 
 
-@login_required(login_url='/login')
+
 def show_main(request):
-    dicoba = BukuKreasi.objects.all()
-    bukus = Buku.objects.all()
-    if len(dicoba) != 0:
-        bukus += dicoba
+    karya_pengguna = BukuKreasi.objects.all().order_by('jumlah_review')
+    bukus = Buku.objects.all().order_by('judul')
+    kata_bijak = quotes.objects.all()
 
-    context = {
-        'name': request.user.username,
-        'class': 'PBP A',
-        'bukus': bukus,
-        'last_login': request.COOKIES['last_login'],
-    }
+    if ('last_login' in request.COOKIES):
+        context = {
+            'kata_bijak':kata_bijak,
+            'pengguna' : request.user.username,
+            'last_login' : request.COOKIES['last_login'],
+            'bukus': bukus,
+            'karya': karya_pengguna
+        }
+    else:
+        context = {
+            'kata_bijak':kata_bijak,
+            'bukus': bukus,
+            'karya': karya_pengguna
+        }
 
     return render(request, "main.html", context)
 
-
+@login_required(login_url='/login')
 def create_buku(request):
     if request.method == "POST":
         form = BukuForm(request.POST, request.FILES)
@@ -48,6 +57,37 @@ def create_buku(request):
     context = {'form': form}
     return render(request, "create_buku.html", context)
 
+@csrf_exempt
+def add_quotes_ajax(request):
+    if request.method == 'POST':
+        kata = request.POST.get("kata")
+        user = request.user
+
+        new_quotes = quotes(kata_kata=kata, user=user)
+        new_quotes.save()
+
+        return HttpResponse(b"CREATED", status=201)
+
+    return HttpResponseNotFound()
+
+def show_my_quotes(request):
+    kata_saya = quotes.objects.filter(User=request.user)
+
+    context = {
+        'kata_saya':kata_saya
+    }
+
+    return render(request,"katasaya.html",context)
+
+def del_quotes_ajax(request):
+    if request.method == 'POST':
+        id = request.get('id')
+        kata_hapus = quotes.objects.get(pk=id)
+        kata_hapus.delete()
+
+        return HttpResponse(b"DIHAPUS", status=201)
+
+    return HttpResponseNotFound()
 
 def show_xml(request):
     data = Buku.objects.all()
@@ -98,9 +138,10 @@ def login_user(request):
     return render(request, 'login.html', context)
 
 
+
 def logout_user(request):
     logout(request)
-    response = HttpResponseRedirect(reverse('main:login'))
+    response = HttpResponseRedirect(reverse('main:show_main'))
     response.delete_cookie('last_login')
     return response
 

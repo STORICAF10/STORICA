@@ -9,8 +9,8 @@ from main.views import delete_buku
 app_name = 'main'
 
 urlpatterns = [
-    path('', login_user, name='login'),
-    path('home', show_main, name='show_main'),
+    path('login', login_user, name='login'),
+    path('', show_main, name='show_main'),
     path('create-buku', create_buku, name='create_buku'),
     path('xml/', show_xml, name='show_xml'), 
     path('json/', show_json, name='show_json'), 
