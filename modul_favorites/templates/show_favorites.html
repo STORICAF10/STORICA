@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block meta %}
-<title>Preview</title>
+<title>Favorites</title>
 {% endblock meta %}
 
 {% block content %}
@@ -32,4 +32,48 @@
         padding: 10px;
     }
 </style>
+
+<div class="container mt-4">
+    <h1>Remove With Ajax</h1>
+    <ul>
+        {% for buku in karya %}
+            <li>{{ buku.judul }}
+                <button class="add-remove-favorite" data-id="{{ buku.pk }}" data-action="{% if request.user in buku.buku_favorites.all %}remove{% else %}add{% endif %}">
+                    {% if request.user in buku.buku_favorites.all %}Remove from Favorites{% else %}Add to Favorites{% endif %}
+                </button>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+    $('.add-remove-favorite').click(function() {
+        var button = $(this);
+        var id = button.data('id');
+        var action = button.data('action');
+
+        $.ajax({
+            type: 'POST',
+            url: "{% url 'modul_favorites:toggle_favorites' %}",
+            data: {
+                id: id,
+                action: action,
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+            success: function(response) {
+                if (response.status === 'added') {
+                    button.data('action', 'remove').text('Remove from Favorites');
+                } else if (response.status === 'removed') {
+                    button.data('action', 'add').text('Add to Favorites');
+                }
+            },
+            error: function(xhr, errmsg, err) {
+                console.log(xhr.status + ": " + xhr.responseText);
+            }
+        });
+    });
+});
+</script>
 {% endblock content %}
