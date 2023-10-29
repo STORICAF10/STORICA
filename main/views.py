@@ -193,11 +193,10 @@ def show_my_quotes(request):
 
     return render(request,"katasaya.html",context)
 
-@require_POST
-def del_quotes_ajax(request):
-    item = get_object_or_404(YourModel, pk=item_id)
-    item.delete()
-    return JsonResponse({'message': 'quotes telah dihapus'})
+def delete_quotes(request, id):
+    katabijak = quotes.objects.get(pk = id)
+    katabijak.delete()    
+    return HttpResponseRedirect(reverse('main:show_my_quotes'))
 
 def show_xml(request):
     data = Buku.objects.all()

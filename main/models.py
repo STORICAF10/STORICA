@@ -39,8 +39,5 @@ class level(models.Model):
 
 
 class quotes(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     kata_kata = models.TextField()
-
-class profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)

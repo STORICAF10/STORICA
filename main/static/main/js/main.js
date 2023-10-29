@@ -9,7 +9,7 @@ async function refreshProducts() {
         fetch(url, {
             method: 'POST',
             body: new FormData(document.querySelector('#form'))
-        }).then(refreshProducts)
+        }).then(window.location.reload())
         console.log("ditekan")
 
         document.getElementById("form").reset()

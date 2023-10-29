@@ -23,6 +23,6 @@ urlpatterns = [
     path('edit-buku/<int:id>', edit_buku, name='edit_buku'),
     path('delete/<int:id>', delete_buku, name='delete_buku'),
     path('preview/<int:id>', show_preview, name='show_preview'),
-    path('del_quotes/<int:id>',del_quotes_ajax,name="del_quotes_ajax"),
-    path('get-quotes-jason',get_quotes_json,name="get_quotes_json")
+    path('get-quotes-jason',get_quotes_json,name="get_quotes_json"),
+    path('delete-quotes/<int:id>', delete_quotes, name='delete_quotes'),
 ]
