@@ -16,8 +16,14 @@
             <a href="{% url 'modul_preview:show_bacaan' buku.pk %}" class="btn btn-primary">
                 Baca Buku
             </a>
+            <a href="{% url 'modul_favorites:add_favorites' buku.pk %}" class="btn btn-primary">
+                Tambahkan ke Favorit
+            </a>
             <a href="{% url 'main:show_main'%}" class="btn btn-primary">
                 Back to Home
+            </a>
+            <a href="{% url 'main:delete_buku' buku.pk%}" class="btn btn-danger">
+                Delete
             </a>
         </div>
     </div>

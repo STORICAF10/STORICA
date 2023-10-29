@@ -77,6 +77,7 @@ def create_buku(request):
         form = BukuForm(request.POST, request.FILES)
         if form.is_valid():
             buku = form.save(commit=False)
+            print(buku)
             buku.user = request.user
             buku.save()
             return HttpResponseRedirect(reverse('main:show_main'))
