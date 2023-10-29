@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+    <link rel="stylesheet" href="{% static 'main/css/semuabuku.css' %}" />
+{% endblock meta %}
+
+{% block content %}
+<nav class="navbar navbar-expand-lg bg-light">
+    <div class="container-fluid">
+      <a style="color:rgb(24,0,0)" class="navbar-brand" href="{% url 'main:show_main' %}"><strong>STORICA</strong></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarText">
+        {% if user.is_authenticated %}
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url 'main:create_buku' %}">Buat Cerita</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Koleksi Saya</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Draft</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'main:logout' %}">Log out</a>
+          </li>
+        </ul>
+        <span class="navbar-text">
+          {{user.username}}, level {{tingkatan.level}} ( {{tingkatan.buku_total}} buku )
+        </span>
+        {% else %}
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="{% url 'main:login' %}">Login</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'main:register' %}">Register</a>
+            </li>
+          </ul>
+          <span class="navbar-text">
+            Masuk dan Temukan Keajaiban!
+          </span>
+        {% endif %}
+      </div>
+    </div>
+  </nav>
+<div class="container" style="margin-top: 5px;">
+    <h4><strong>Cari Buku: </strong></h4>
+    <div class="row bx-5">
+    <div class="col-2">
+        <a href="{% url 'main:filter_empat' %}">
+        <button style = "text-align:left;background-color:#24000000;color:  rgb(24,0,0);width: 150px;height: 30px;border-radius: 20px;border-color: #240000;"type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Rating (>4)</button>
+        </a>
+    </div>
+    <div class="col-2">
+        <a href="{% url 'main:filter_inggris' %}">
+        <button style = "text-align:left;background-color:#24000000;color:  rgb(24,0,0);width: 150px;height: 30px;border-radius: 20px;border-color: #240000;"type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Bahasa (Inggris)</button>
+        </a>
+    </div>
+    <div class="col-2">
+        <a href="{% url 'main:filter_karya' %}">
+        <button style = "text-align:left;background-color:#24000000;color:  rgb(24,0,0);width: 150px;height: 30px;border-radius: 20px;border-color: #240000;"type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Karya Pengguna</button>
+        </a>
+    </div>
+</div>
+    <br/><br/>
+    <div class="row gy-5">
+        {% for karya in karya %}
+            <div class="col-2">
+                <div class="card" id="sampulkecil">
+                    <a href ="{% url 'main:show_preview' karya.pk %}">
+                        <button class="buttonbukukecil">                                    
+                            <img src="{{karya.gambar}}" id="sampulbuku" alt="...">
+                            <div class="penampungjudul">
+                                <ul class="smallfont">
+                                    <li id = "coverkecil"><Strong id = "coverkecil">{{karya.judul}}</Strong></li>
+                                    <li id = "coverkecil">{{karya.penulis}}</li>
+                                </ul>  
+                            </div>
+                        </button>                                
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
+        {% for buku in bukus %}
+            <div class="col-2">
+                <div class="card" id="sampulkecil">
+                    <a href ="{% url 'main:show_preview' buku.pk %}">
+                        <button class="buttonbukukecil">                                    
+                            <img src="{{buku.gambar}}" id="sampulbuku" alt="...">
+                            <div class="penampungjudul">
+                                <ul class="smallfont">
+                                    <li id = "coverkecil"><Strong id = "coverkecil">{{buku.judul}}</Strong></li>
+                                    <li id = "coverkecil">{{buku.penulis}}</li>
+                                </ul>  
+                            </div>
+                        </button>                                
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <div id ="kembalilagi">
+    <a style="align-self: center;"href = "{% url 'main:show_main' %}">
+        <button  class="tombolkembali">Kembali</button>
+    </a>
+    </div>
+</div>        
+    <script type="text/JavaScript" src="{% static 'main/js/semuabuku.js' %}"></script>
+{% endblock content %}
