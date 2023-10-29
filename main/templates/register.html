@@ -1,85 +1,47 @@
 {% extends 'base.html' %}
 
 {% block meta %}
-    <title>Halaman Registrasi</title>
+<title>Halaman Registrasi</title>
 {% endblock meta %}
 
-{% block content %}  
+{% block content %}
 
-<nav class="navbar navbar-expand-lg bg-light">
-    <div class="container-fluid">
-      <a style="color:rgb(24,0,0)" class="navbar-brand" href="{% url 'main:show_main' %}"><strong>STORICA</strong></a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarText">
-        {% if user.is_authenticated %}
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{% url 'main:create_buku' %}">Buat Cerita</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Koleksi Saya</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Draft</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'main:logout' %}">Log out</a>
-          </li>
-        </ul>
-        <span class="navbar-text">
-          {{user.username}}, level {{tingkatan.level}} ( {{tingkatan.buku_total}} buku )
-        </span>
-        {% else %}
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="{% url 'main:login' %}">Login</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'main:register' %}">Register</a>
-            </li>
-          </ul>
-          <span class="navbar-text">
-            Masuk dan Temukan Keajaiban!
-          </span>
-        {% endif %}
+
+<div class="container" style="margin-top: 30px;width: 100%;">
+  <div class="row">
+    <div class="col-3">
+      <div class="card" style="border: none;">
       </div>
     </div>
-</nav>
-<div class="container" style="margin-top: 30px;width: 100%;">
-    <div class="row">
-        <div class="col-3">
-            <div class="card" style="border: none;">
-            </div>
+    <div class="col-6">
+      <div class="card" style="width: 100%;">
+        <div class="container" style="margin: 20px;">
+          <div class="login" style="padding: 20px;">
+
+            <h1 style="text-align: center;">Register</h1>
+
+            <form method="POST">
+              {% csrf_token %}
+              <table>
+                {{ form.as_table }}
+              </table>
+              <input type="submit" name="submit" value="Daftar"
+                style="border-radius: 4px;border:none;color: rgb(255, 255, 255);margin-bottom: 5px;background-color: rgb(50, 59, 218);width: 100%;height:35px;margin-top:10px">
+              </td>
+            </form>
+
+
+            {% if messages %}
+            <ul>
+              {% for message in messages %}
+              <li>{{ message }}</li>
+              {% endfor %}
+            </ul>
+            {% endif %}
+
+          </div>
         </div>
-        <div class="col-6">
-            <div class="card" style="width: 100%;" >
-                <div class= "container" style="margin: 20px;">
-                    <div class = "login"style="padding: 20px;">
-                        
-                        <h1 style="text-align: center;">Register</h1>  
+      </div>
+    </div>
 
-                            <form method="POST" >  
-                                {% csrf_token %}  
-                                <table>  
-                                    {{ form.as_table }}  
-                                </table>  
-                                <input type="submit" name="submit" value="Daftar"style= "border-radius: 4px;border:none;color: rgb(255, 255, 255);margin-bottom: 5px;background-color: rgb(50, 59, 218);width: 100%;height:35px;margin-top:10px"></td>
-                            </form>
-                            
-
-                        {% if messages %}  
-                            <ul>   
-                                {% for message in messages %}  
-                                    <li>{{ message }}</li>  
-                                    {% endfor %}  
-                            </ul>   
-                        {% endif %}
-
-                    </div>
-                </div>  
-            </div>
-        </div>
-
-{% endblock content %}
+    {% endblock content %}

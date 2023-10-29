@@ -271,7 +271,7 @@ def edit_buku(request, id):
     context = {'form': form}
     return render(request, "edit_buku.html", context)
 
-
+@login_required(login_url='/login')
 def delete_buku(request, id):
     # Get data berdasarkan ID
     buku = Buku.objects.get(pk = id)
