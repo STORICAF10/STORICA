@@ -20,8 +20,8 @@ from django.http import HttpResponseNotFound
 
 
 def show_main(request):
-    karya_pengguna = BukuKreasi.objects.all().order_by('jumlah_review')
-    bukus = Buku.objects.all().order_by('judul')
+    karya_pengguna = BukuKreasi.objects.all().order_by('jumlah_review').filter(is_published = True)
+    bukus = Buku.objects.all().order_by('jumlah_review')
     kata_bijak = quotes.objects.all()
 
     if ('last_login' in request.COOKIES):
