@@ -2,13 +2,54 @@
 {% load static %}
 
 {% block meta %}
-    <link rel="stylesheet" href="{% static 'main/css/main.css' %}" />
+    <link rel="stylesheet" href="{% static 'main/css/semuabuku.css' %}" />
 {% endblock meta %}
 
 
 {% block content %}
 
-<div class="container">
+<nav class="navbar navbar-expand-lg bg-light">
+    <div class="container-fluid">
+      <a style="color:rgb(24,0,0)" class="navbar-brand" href="{% url 'main:show_main' %}"><strong>STORICA</strong></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarText">
+        {% if user.is_authenticated %}
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url 'main:create_buku' %}">Buat Cerita</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Koleksi Saya</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Draft</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'main:logout' %}">Log out</a>
+          </li>
+        </ul>
+        <span class="navbar-text">
+          {{user.username}}, level {{tingkatan.level}} ( {{tingkatan.buku_total}} buku )
+        </span>
+        {% else %}
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="{% url 'main:login' %}">Login</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'main:register' %}">Register</a>
+            </li>
+          </ul>
+          <span class="navbar-text">
+            Masuk dan Temukan Keajaiban!
+          </span>
+        {% endif %}
+      </div>
+    </div>
+</nav>
+<div class="container" style="margin-top:0px;margin-bottom:0px">
     <div class = "row">
         <div class = "col-4" style="padding-right:0">
             <h4><strong>Karya Pengguna</strong></h4>
@@ -77,18 +118,10 @@
                     {% endfor %}
                 </div>   
             </div>
-            <p><br/><br/></p>
-            <a href="{% url 'main:create_buku' %}" style="padding-top: 15px;">
-                <button class="btn btn-primary">Add New Buku</button>
-            </a>
-        
-            <a href="{% url 'main:logout' %}" style="padding-top: 15px;">
-                <button class="btn btn-danger">Logout</button>
-            </a>
         </div>
         <div class = "col-8" style="padding-right: 70px;padding-left: 90px;">
             <div>
-                <h5>sebuah tulisan<br/><br/><br/></h5>
+                <h5><strong>Koleksi Buku</strong><br/><br/></h5>
             </div>
             <div class = "row gx-5" id = "untukbuku">
                 {% for buku in bukus %}
@@ -111,22 +144,22 @@
                     {%endif %}
                 {% endfor %}
                 <div class = "row" style="padding-top:15px;padding-right:  0px; margin-right: 0px;">
-                    <a href = "#" align=right style="padding:0px;">
+                    <a href = "{% url 'main:show_semua' %}" align=right style="padding:0px;">
                         <button  align=right style="background-color: #240000;border-radius: 20px;color:whitesmoke">Lihat Semua</button>
                     </a>
                 </div>
             </div>
             <div class = "row" id = "untukkatabijak" >
-                <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel" style="height: 25vh;max-height: 25vh;">
-                    <div class="carousel-inner" style="max-height: 25vh;height: 25vh;">
+                <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel" style="height: 30vh;max-height: 30vh;">                    
+                    <div id="akandiajax" class="carousel-inner" style="max-height: 30vh;height: 30vh;">
                         {% for kata in kata_bijak %}
                             {% if forloop.counter0 == 0 %}
-                                <div class="carousel-item active" style="max-height: 25vh;height: 25vh;">
-                                    <p style="overflow-y: scroll;">{{kata.kata_kata}}</p>
+                                <div class="carousel-item active" style="max-height: 30vh;height: 30vh;">
+                                    <p style="overflow-y: auto;">{{kata.kata_kata}}</p>
                                     <p>~{{kata.pengguna}}</p>
                                 </div>
                             {% else %}
-                                <div class="carousel-item" style="max-height: 25vh;height: 25vh;">
+                                <div class="carousel-item" style="max-height: 30vh;height: 30vh;">
                                     <p style="overflow-y: scroll;">{{kata.kata_kata}}</p>
                                     <p>~{{kata.pengguna}}</p>
                                 </div>
@@ -134,11 +167,49 @@
                         {% endfor %}
                     </div>
                 </div>
-                <a href="#"  align=right>
-                    <button align = right style="height: 30px; width: 30px; border-radius: 50%;background-color: #240000;color: whitesmoke;">Q</button>
+                <div class="col-4" align ="right">
+                <a href="{% url 'main:show_my_quotes' %}"  align=right>
+                    <button align = right style="height: 30px; width: 200px; border-radius: 20px;background-color: #240000;color: whitesmoke;">Quotes Saya</button>
                 </a>
+                </div>
+                <div class="col-4">
+                    {% if user.is_authenticated %}
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" style="height: 30px; width: 200px; border-radius: 20px;background-color: #240000;color: whitesmoke;border: none;">Buat Quotes</button>
+                    {% else %}
+                    <a href="{% url 'main:login' %}"  align=right>
+                        <button align = right style="height: 30px; width: 200px; border-radius: 20px;background-color: #240000;color: whitesmoke;">Buat Quotes</button>
+                    </a>
+                    {% endif %}
+                </div>
             </div>
         </div>
     </div>
 </div>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Product</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="form" onsubmit="return false;">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="quotes" class="col-form-label">Quotes Anda:</label>
+                        <textarea class="form-control" id="quotes" name="quotes"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                <button type="button" class="btn btn-primary" id="button_add" data-bs-dismiss="modal">Buat quotes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<input type="hidden" id="Url" data-url="{% url 'main:add_quotes_ajax' %}" />
+<input type="hidden" id="Urlpalsu" data-url="{% url 'main:get_quotes_json' %}" />
+<script type="text/JavaScript" src="{% static 'main/js/main.js' %}">
+</script>
 {% endblock content %}

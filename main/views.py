@@ -16,18 +16,48 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponseNotFound
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
+from django.shortcuts import get_object_or_404
 
+def get_buku_json(request):
+    buku = Buku.objects.all().order_by('jumlah_review')
+    return HttpResponse(serializers.serialize('json', buku))
 
+def get_bukukreasi_json(request):
+    bukukreasi = Buku.objects.all().order_by('jumlah_review')
+    return HttpResponse(serializers.serialize('json', bukukreasi))
+
+def show_semua(request):
+    karya_pengguna = BukuKreasi.objects.all().order_by('jumlah_review').filter(is_published = True)
+    bukus = Buku.objects.all().order_by('jumlah_review')
+
+    context = {
+        'bukus': bukus,
+        'karya': karya_pengguna
+    }
+    return render(request, "semuabuku.html", context)
+    
 
 def show_main(request):
     karya_pengguna = BukuKreasi.objects.all().order_by('jumlah_review').filter(is_published = True)
     bukus = Buku.objects.all().order_by('jumlah_review')
     kata_bijak = quotes.objects.all()
 
+    
+
     if ('last_login' in request.COOKIES):
+        if(hasattr(request,'level')):
+            tingkatan = level.objects.get(user=request.user)
+        
+        else:
+            tingkatan = level(user=request.user,level=0,buku_total=0,batas_atas=5,persen=0)
+        
         context = {
+            'persen':100*tingkatan.buku_total/tingkatan.batas_atas,
+            'tingkatan':tingkatan,            
             'kata_bijak':kata_bijak,
-            'pengguna' : request.user.username,
+            'pengguna' : request.user,
             'last_login' : request.COOKIES['last_login'],
             'bukus': bukus,
             'karya': karya_pengguna
@@ -61,7 +91,7 @@ def create_buku(request):
 @csrf_exempt
 def add_quotes_ajax(request):
     if request.method == 'POST':
-        kata = request.POST.get("kata")
+        kata = request.POST.get("quotes")
         user = request.user
 
         new_quotes = quotes(kata_kata=kata, user=user)
@@ -71,8 +101,92 @@ def add_quotes_ajax(request):
 
     return HttpResponseNotFound()
 
+def filter_bintang_empat(request):
+    karya_pengguna = BukuKreasi.objects.all().order_by('jumlah_review').filter(is_published = True).filter(rating__gt=4)
+    bukus = Buku.objects.all().order_by('jumlah_review').filter(rating__gt= 4)
+
+    
+    if ('last_login' in request.COOKIES):
+        if(hasattr(request,'level')):
+            tingkatan = level.objects.get(user=request.user)
+        
+        else:
+            tingkatan = level(user=request.user,level=0,buku_total=0,batas_atas=5,persen=0)
+              
+        context = {
+            'persen':100*tingkatan.buku_total/tingkatan.batas_atas,
+            'tingkatan':tingkatan,            
+            'pengguna' : request.user,
+            'last_login' : request.COOKIES['last_login'],
+            'bukus': bukus,
+            'karya': karya_pengguna
+        }
+    else:
+        context = {
+        
+            'bukus': bukus,
+            'karya': karya_pengguna
+        }
+    return render(request,"filterbintangempat.html",context)
+
+def filter_bahasa_inggris(request):
+    karya_pengguna = BukuKreasi.objects.all().order_by('jumlah_review').filter(is_published = True).filter(bahasa="eng")
+    bukus = Buku.objects.all().order_by('jumlah_review').filter(bahasa="eng")
+
+    
+    if ('last_login' in request.COOKIES):
+        if(hasattr(request,'level')):
+            tingkatan = level.objects.get(user=request.user)
+        
+        else:
+            tingkatan = level(user=request.user,level=0,buku_total=0,batas_atas=5,persen=0)
+        
+        context = {
+            'persen':100*tingkatan.buku_total/tingkatan.batas_atas,
+            'tingkatan':tingkatan,            
+            'pengguna' : request.user,
+            'last_login' : request.COOKIES['last_login'],
+            'bukus': bukus,
+            'karya': karya_pengguna
+        }
+    else:
+        context = {
+        
+            'bukus': bukus,
+            'karya': karya_pengguna
+        }
+    return render(request,"filterbukuinggris.html",context)
+
+def filter_buku_karya(request):
+    karya_pengguna = BukuKreasi.objects.all().order_by('jumlah_review').filter(is_published = True)
+
+    
+    if ('last_login' in request.COOKIES):
+        if(hasattr(request,'level')):
+            tingkatan = level.objects.get(user=request.user)
+        
+        else:
+            tingkatan = level(user=request.user,level=0,buku_total=0,batas_atas=5,persen=0)
+        
+        context = {
+            'persen':100*tingkatan.buku_total/tingkatan.batas_atas,
+            'tingkatan':tingkatan,            
+           
+            'pengguna' : request.user,
+            'last_login' : request.COOKIES['last_login'],
+            'karya': karya_pengguna
+        }
+    else:
+        context = {
+            'karya': karya_pengguna
+        }
+    return render(request,"filterbukuinggris.html",context)
+    
+        
+
+@login_required(login_url='/login')
 def show_my_quotes(request):
-    kata_saya = quotes.objects.filter(User=request.user)
+    kata_saya = quotes.objects.filter(user=request.user)
 
     context = {
         'kata_saya':kata_saya
@@ -80,15 +194,10 @@ def show_my_quotes(request):
 
     return render(request,"katasaya.html",context)
 
-def del_quotes_ajax(request):
-    if request.method == 'POST':
-        id = request.get('id')
-        kata_hapus = quotes.objects.get(pk=id)
-        kata_hapus.delete()
-
-        return HttpResponse(b"DIHAPUS", status=201)
-
-    return HttpResponseNotFound()
+def delete_quotes(request, id):
+    katabijak = quotes.objects.get(pk = id)
+    katabijak.delete()    
+    return HttpResponseRedirect(reverse('main:show_my_quotes'))
 
 def show_xml(request):
     data = Buku.objects.all()
@@ -178,3 +287,7 @@ def show_preview(request, id):
         'buku': buku,
     }
     return render(request, "preview.html", context)
+
+def get_quotes_json(request):
+    katabijak= quotes.objects.filter(user=request.user)
+    return HttpResponse(serializers.serialize('json', katabijak))
