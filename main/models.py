@@ -11,6 +11,7 @@ class Buku(models.Model):
     rating = models.DecimalField(max_digits=3, decimal_places=2, null=True, blank=True)
     gambar = models.URLField(null=True, blank=True)
     tanggal_terbit = models.DateField(null=True, blank=True)
+    buku_favorites = models.ManyToManyField(User)
 
 class BukuKreasi(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE,null=True,blank=True)
@@ -25,6 +26,7 @@ class BukuKreasi(models.Model):
     tanggal_terbit = models.DateField(null=True, blank=True)
     is_published = models.BooleanField()
     isi_buku = models.TextField(null="",blank="")
+
 
     # Representasi teks model 
     def __str__(self):

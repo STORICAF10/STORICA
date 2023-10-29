@@ -7,26 +7,7 @@
 
 
 {% block content %}
-<nav class="navbar navbar-expand-lg bg-light">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#"><strong>STORICA</strong></a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNavDropdown">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a href="{% url 'main:login' %}">
-                <button  style= "color: rgb(255, 255, 255);margin-bottom: 5px;background-color: rgb(50, 59, 218);width: 100%; border-radius: 8px;border: none;height: 35px;">
-                    Login
-                </button>
-            </a>
-          </li>
-        </ul>
-      </div>
-      <p style="color:black;font-size:18px;" align="right"><strong>User: {{pengguna}}</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-    </div>
-</nav>
+
 <div class="container">
     <div class = "row">
         <div class = "col-4" style="padding-right:0">
@@ -52,7 +33,7 @@
                                 <div class="carousel-item active">
                                     <a href = "{% url 'main:show_preview' karya.pk %}">
                                     <button class="buttonbuku">
-                                        <img src="{{buku.gambar}}" id="sampulbuku" alt="...">
+                                        <img src="{{karya.gambar}}" id="sampulbuku" alt="...">
                                         <div class="penampungjudul">
                                             <ul>
                                                 <li id = "cover"><Strong id = "cover">{{karya.judul}}</Strong></li>
@@ -66,7 +47,7 @@
                                 <div class="carousel-item">
                                     <a href = "{% url 'main:show_preview' karya.pk %}">
                                     <button class="buttonbuku">
-                                        <img src="{{buku.gambar}}" id="sampulbuku" alt="...">
+                                        <img src="{{karya.gambar}}" id="sampulbuku" alt="...">
                                         <div class="penampungjudul">
                                             <ul>
                                                 <li id = "cover"><Strong id = "cover">{{karya.judul}}</Strong></li>

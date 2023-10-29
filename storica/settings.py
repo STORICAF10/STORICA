@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'main',
     'modul_baca',
-    'modul_preview'
+    'modul_preview',
+    'modul_favorites'
 ]
 
 MIDDLEWARE = [
