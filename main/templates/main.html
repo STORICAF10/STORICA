@@ -1,53 +1,144 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+    <link rel="stylesheet" href="{% static 'main/css/main.css' %}" />
+{% endblock meta %}
+
 
 {% block content %}
-<div class="container">
-    <h1 class="my-4">Storica</h1>
 
-    <div class="row">
-        {% for buku in bukus %}
-        <div class="col-lg-2 col-md-3 col-sm-4 col-6 mb-4">
-            <div class="card">
-                <a href="{% url 'main:show_preview' buku.pk %}">
-                    <img src="{{ buku.gambar }}" alt="{{ buku.judul }}" class="card-img-top">
-                </a>
-                <div class="card-body">
-                    <h5 class="card-title">{{ buku.judul }}</h5>
-                    <p class="card-text">Author: {{ buku.penulis }}</p>
-                    <p class="card-text">Pages: {{ buku.jumlah_halaman }}</p>
-                    <p class="card-text">Language: {{ buku.bahasa }}</p>
-                    <p class="card-text">Publisher: {{ buku.penerbit }}</p>
-                    <p class="card-text">Rating: {{ buku.rating }}</p>
-                    <p class="card-text">Publish Date: {{ buku.tanggal_terbit }}</p>
+<div class="container">
+    <div class = "row">
+        <div class = "col-4" style="padding-right:0">
+            <h4><strong>Karya Pengguna</strong></h4>
+            <div id = "carouselindicator" class = "carousel slide" data-bs-ride="true">
+                <div class="carousel-indicators">
+                    {% for karya in karya %}
+                        {% if forloop.counter0 < 5 %}
+                            {% if forloop.counter0 == 0 %}
+                                <button id="indikatorlingkaran" type="button" data-bs-target="#carouselindicator" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                            {% else %}
+                                <button id="indikatorlingkaran" type="button" data-bs-target="#carouselindicator" data-bs-slide-to="{{forloop.counter0}}" aria-current="true" aria-label="Slide {{forloop.counter}}"></button>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
                 </div>
-                <a href="{% url 'main:edit_buku' buku.pk %}">
-                    <button>
-                        Edit
-                    </button>
-                </a>
-                <a href="{% url 'main:delete_buku' buku.pk %}">
-                    <button>
-                        Delete
-                    </button>
+                
+                <div class="carousel-inner">
+                    {% for karya in karya %}
+                        {% if forloop.counter0 < 5 %}
+                            {% if forloop.counter0 == 0 %}
+                                
+                                <div class="carousel-item active">
+                                    <a href = "{% url 'main:show_preview' karya.pk %}">
+                                    <button class="buttonbuku">
+                                        <img src="{{karya.gambar}}" id="sampulbuku" alt="...">
+                                        <div class="penampungjudul">
+                                            <ul>
+                                                <li id = "cover"><Strong id = "cover">{{karya.judul}}</Strong></li>
+                                                <li id = "cover">{{karya.penulis}}</li>
+                                            </ul>  
+                                        </div>
+                                    </button>
+                                    </a>
+                                </div>
+                            {% else %}
+                                <div class="carousel-item">
+                                    <a href = "{% url 'main:show_preview' karya.pk %}">
+                                    <button class="buttonbuku">
+                                        <img src="{{karya.gambar}}" id="sampulbuku" alt="...">
+                                        <div class="penampungjudul">
+                                            <ul>
+                                                <li id = "cover"><Strong id = "cover">{{karya.judul}}</Strong></li>
+                                                <li id = "cover">{{karya.penulis}}</li>
+                                            </ul>                                            
+                                        </div>
+                                    </button>
+                                    </a>
+                                </div>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+
+                <div>
+                    {% for karya in karya %}
+                        {% if forloop.counter0 < 5 %}
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselindicator" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                          </button>
+                          <button class="carousel-control-next" type="button" data-bs-target="#carouselindicator" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                          </button>
+                        {% endif %}
+                    {% endfor %}
+                </div>   
+            </div>
+            <p><br/><br/></p>
+            <a href="{% url 'main:create_buku' %}" style="padding-top: 15px;">
+                <button class="btn btn-primary">Add New Buku</button>
+            </a>
+        
+            <a href="{% url 'main:logout' %}" style="padding-top: 15px;">
+                <button class="btn btn-danger">Logout</button>
+            </a>
+        </div>
+        <div class = "col-8" style="padding-right: 70px;padding-left: 90px;">
+            <div>
+                <h5>sebuah tulisan<br/><br/><br/></h5>
+            </div>
+            <div class = "row gx-5" id = "untukbuku">
+                {% for buku in bukus %}
+                    {% if forloop.counter0 < 4 %}
+                        <div class="col-3">
+                            <div class="card" id="sampulkecil">
+                                <a href ="{% url 'main:show_preview' buku.pk %}">
+                                    <button class="buttonbukukecil">                                    
+                                        <img src="{{buku.gambar}}" id="sampulbuku" alt="...">
+                                        <div class="penampungjudul">
+                                            <ul class="smallfont">
+                                                <li id = "coverkecil"><Strong id = "coverkecil">{{buku.judul}}</Strong></li>
+                                                <li id = "coverkecil">{{buku.penulis}}</li>
+                                            </ul>  
+                                        </div>
+                                    </button>                                
+                                </a>
+                            </div>
+                        </div>
+                    {%endif %}
+                {% endfor %}
+                <div class = "row" style="padding-top:15px;padding-right:  0px; margin-right: 0px;">
+                    <a href = "#" align=right style="padding:0px;">
+                        <button  align=right style="background-color: #240000;border-radius: 20px;color:whitesmoke">Lihat Semua</button>
+                    </a>
+                </div>
+            </div>
+            <div class = "row" id = "untukkatabijak" >
+                <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel" style="height: 25vh;max-height: 25vh;">
+                    <div class="carousel-inner" style="max-height: 25vh;height: 25vh;">
+                        {% for kata in kata_bijak %}
+                            {% if forloop.counter0 == 0 %}
+                                <div class="carousel-item active" style="max-height: 25vh;height: 25vh;">
+                                    <p style="overflow-y: scroll;">{{kata.kata_kata}}</p>
+                                    <p>~{{kata.pengguna}}</p>
+                                </div>
+                            {% else %}
+                                <div class="carousel-item" style="max-height: 25vh;height: 25vh;">
+                                    <p style="overflow-y: scroll;">{{kata.kata_kata}}</p>
+                                    <p>~{{kata.pengguna}}</p>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                <a href="#"  align=right>
+                    <button align = right style="height: 30px; width: 30px; border-radius: 50%;background-color: #240000;color: whitesmoke;">Q</button>
                 </a>
             </div>
         </div>
-        {% if forloop.counter|divisibleby:5 and not forloop.last %}
     </div>
-    <div class="row">
-        {% endif %}
-        {% endfor %}
-    </div>
-
-    <br />
-    <h5 class="my-4">Sesi terakhir login: {{ last_login }}</h5>
-
-    <a href="{% url 'main:create_buku' %}">
-        <button class="btn btn-primary">Add New Buku</button>
-    </a>
-
-    <a href="{% url 'main:logout' %}">
-        <button class="btn btn-danger">Logout</button>
-    </a>
 </div>
 {% endblock content %}

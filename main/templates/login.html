@@ -6,40 +6,49 @@
 
 {% block content %}
 
-<div class = "login">
+<div class="container" style="margin-top: 30px;">
+    <div class="row">
+        <div class="col-4">
+            <div class="card" style="border: none;">
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="card">
+                <div class = "login">
 
-    <h1>Login</h1>
+                    <h2 style="text-align: center;">Login</h>
 
-    <form method="POST" action="">
-        {% csrf_token %}
-        <table>
-            <tr>
-                <td>Username: </td>
-                <td><input type="text" name="username" placeholder="Username" class="form-control"></td>
-            </tr>
-                    
-            <tr>
-                <td>Password: </td>
-                <td><input type="password" name="password" placeholder="Password" class="form-control"></td>
-            </tr>
+                    <form method="POST" action="">
+                            {% csrf_token %}
+                            <table style="border:none;margin-right: 10px;margin-top: 10px;">
+                                <tr>
+                                    <td><p style="font-size: 24px;margin-left: 10px;margin-right: 10px;">Username:</p></td>
+                                    <td><input type="text" name="username" placeholder="Username" class="form-control"></td>
+                                </tr>
+                                        
+                                <tr>
+                                    <td><p style="font-size: 24px;margin-left: 10px;margin-right: 10px;">Password:</p> </td>
+                                    <td><input type="password" name="password" placeholder="Password" class="form-control"></td>
 
-            <tr>
-                <td></td>
-                <td><input class="btn login_btn" type="submit" value="Login"></td>
-            </tr>
-        </table>
-    </form>
-
-    {% if messages %}
-        <ul>
-            {% for message in messages %}
-                <li>{{ message }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}     
-        
-    Don't have an account yet? <a href="{% url 'main:register' %}">Register Now</a>
-
+                            </table>
+                        
+            
+                            <div class="card-body">         
+                                <p class="card-text" style="font-size: 10px;text-align:right;">Don't have an account yet? <a href="{% url 'main:register' %}" style="font-size: 10px">Register Now</a></p>
+                                <input class="btn login_btn"  type="submit" value="Masuk" style= "color: rgb(255, 255, 255);margin-bottom: 5px;background-color: rgb(50, 59, 218);width: 100%;">
+                            </div>
+                    </form>   
+                    {% if messages %}
+                    <ul>
+                        {% for message in messages %}
+                            <li>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %} 
+                </div>
+            </div>
+    </div>
 </div>
+
 
 {% endblock content %}

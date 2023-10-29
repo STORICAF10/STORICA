@@ -21,5 +21,6 @@ urlpatterns = [
     path('', include('main.urls')),
     path('preview/', include('modul_preview.urls')),
     path('preview/baca/', include('modul_baca.urls')),
+    path('favorites/', include('modul_favorites.urls')),
     path('admin/', admin.site.urls),
 ]
