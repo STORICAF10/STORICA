@@ -88,6 +88,25 @@ def create_buku(request):
     context = {'form': form}
     return render(request, "create_buku.html", context)
 
+def create_buku_baru(request):
+    if request.method == "POST":
+        print("\n Masuk bNag KE SAVE \n")
+        form = BukuForm(request.POST, request.FILES)
+        if form.is_valid():
+            buku = form.save(commit=False)
+            buku.user = request.user
+            buku.save()
+            return HttpResponseRedirect(
+                reverse("main:autoSave", kwargs={"id_buku": buku.id})
+            )
+
+    else:
+        form = BukuForm()
+
+    context = {"form": form}
+    return render(request, "create_buku_baru.html", context)
+
+
 @csrf_exempt
 def add_quotes_ajax(request):
     if request.method == 'POST':
@@ -291,3 +310,85 @@ def show_preview(request, id):
 def get_quotes_json(request):
     katabijak= quotes.objects.filter(user=request.user)
     return HttpResponse(serializers.serialize('json', katabijak))
+
+
+
+def createIsiBuku(request):
+    buku = BukuKreasi.objects.filter(user=request.user)
+    form = BukuForm(request.POST, request.FILES)
+
+    print("Masuk baNag okk createisibuku")
+    if request.method == "POST":
+        if form.is_valid():
+            isi_buku = request.POST.get("isi_buku")
+            if isi_buku != "":
+                buku.isi_buku = isi_buku
+                buku.is_published = False
+                buku = form.save(commit=False)
+                buku.save()
+                print(buku.judul)
+                form.save()
+                return HttpResponseRedirect(
+                    reverse("main:autoSave", kwargs={"id_buku": buku.id})
+                )
+
+            else:
+                messages.info(request, "Field Cannot Empty")
+
+    context = {"form": form, "buku": buku}
+    return render(request, "create_isi_buku_baru.html", context)
+
+
+def autoSave(request, id_buku):
+    # print(id_buku)
+    buku = BukuKreasi.objects.get(id=id_buku)
+    print(buku)
+    print("sini")
+
+    if request.method == "POST":
+        print("Masuk bsaNag")
+        isi_buku = request.POST.get("isi_buku")
+        buku.isi_buku = isi_buku
+        buku.is_published = True
+        buku.save()
+        print(buku.isi_buku + " auto save uye")
+        return HttpResponseRedirect(
+            reverse("main:autoSave", kwargs={"id_buku": id_buku})
+        )
+
+    else:
+        form = BukuForm()
+        print("get")
+
+    # print(form.isi_buku)
+    context = {"form": form, "buku": buku}
+    print(buku)
+    return render(request, "create_isi_buku_continue.html", context)
+
+
+def publish(request, id_buku):
+    buku = BukuKreasi.objects.get(id=id_buku)
+    print("masuk Publish")
+    buku.is_published = True
+    print(buku.is_published)
+    buku.save()
+    print(buku.isi_buku + " uye")
+    return HttpResponseRedirect(reverse("main:show_main"))
+
+    # print(form.isi_buku)
+    context = {"form": form, "buku": buku}
+    print(buku)
+    return render(request, "create_isi_buku_continue.html", context)
+
+
+def showCover(request):
+    context = {}
+    print("foto siap")
+    if request.method == "POST":
+        print("FGoto masuk")
+        uploaded_file = request.FILE["document"]
+        fs = FileSystemStorage()
+        name = fs.save(uploaded_file.name, uploaded_file)
+        url = fs.url(name)
+        print(url)
+    return HttpResponseRedirect(reverse("main:show_main"))

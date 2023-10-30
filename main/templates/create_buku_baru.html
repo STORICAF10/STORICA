@@ -1,0 +1,281 @@
+{% extends 'base_exclude.html' %} 
+{% load static %}
+
+{% block content %}
+<head>
+    
+    <link rel="stylesheet"  href="{% static 'main/css/create_buku.css' %}">
+    
+    
+    
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+        {% comment %} <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-KyZXEAg3QhqLMpG8r+J4jsl5c9zdLKaUk5Ae5f5b1bw6AUn5f5v8FZJoMxm6f5cH1" crossorigin="anonymous"></script> {% endcomment %}
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+    </head>
+<body>
+
+    
+
+ 
+        
+    
+    <h1 class="judul_page">TAMBAH BUKU</h1>
+    <div class="container">
+    <div class="form">
+        <form method="POST" class="book_form" enctype="multipart/form-data" id="form">
+        {% csrf_token %}
+            <br><table>
+                <tbody><tr class="fields_container">
+                    <td>
+                        <label for="judul">Judul  </label>
+                    </td>
+                    <td class="fields">
+                       <input  type="text" name="judul" maxlength="25" id="judul" oninput="showJudul()" >
+                    </td>
+                </tr>
+        
+                <tr class="fields_container">
+                    <td>
+                        <label for="jumlah_halaman">Jumlah Halaman  </label>
+    
+                    </td>
+                    <td class="fields">
+                        <input  type="number" name="jumlah_halaman" min="0" id="jumlah_halaman" class="jumlah_halaman">
+                    </td>
+                </tr>
+                
+                <tr class="fields_container">
+                    <td>
+                        <label for="bahasa">Bahasa  </label>
+    
+                    </td>
+                    <td class="fields">
+                        <input  type="text" name="bahasa" maxlength="50" id="bahasa">
+                    </td>
+                </tr>
+    
+                <tr class="fields_container">
+                    <td>
+                        <label for="penerbit">Penerbit  </label>
+    
+                    </td>
+                    <td class="fields">
+                        <input  type="text" name="penerbit" maxlength="25" id="penerbit">
+                    </td>
+                </tr>
+
+                <tr class="fields_container">
+                    <td>
+                        <label for="penulis">Penulis</label>
+    
+                    </td>
+                    <td class="fields">
+                        <input  type="text" name="penulis" maxlength="25" id="penulis" oninput="showPenulis()">
+                    </td>
+                </tr>
+    
+                <tr class="fields_container">
+                    <td>
+                        <label for="tanggal_terbit">Tanggal Terbit  </label>
+    
+                    </td>
+                    <td class="fields">
+                        <input  type="date" name="tanggal_terbit" required="" id="tanggal_terbit" class="tanggal_terbit_fields">
+                    </td>
+                </tr>
+    
+                <tr class="fields_container">
+                    <td>
+                        <label for="sampul_buku">Sampul </label>
+    
+                    </td>
+                    <td class="fields">
+                        <input  type="file" accept="image/*" id="select-img" class="select-img"  onchange="showme()">
+                        
+                    </td>
+                </tr>
+    
+    
+            </tbody></table>
+           
+            <a href="{% url 'main:show_main' %}" class="back-btn">
+              <button type="button" class="btn btn-success back-btn">Back</button>
+            </a>
+            <button class="btn btn-success next-btn"  type = "submit" >Next</button>
+          </form>
+    
+            
+        
+        </div>
+
+
+    
+        <div class="priview">
+    
+                <img  alt="sampul" class="sampul" id ="sampul" style="display: none;">
+                <p class="warning">1920 X 1080</p>
+            <div class="book_properties">
+                    <p class="judul_buku" id ="judul_buku_view">Judul Buku</p>
+                    <p class="penulis" id="penulis_view">Penulis</p>
+            </div>
+       
+    <!-- Vertically centered modal -->
+
+        </div>
+
+        
+      </div>
+      
+      
+      <div class="backpopup" id="backpopup" style="display: none;" >
+
+
+        <div class="popup-frame">
+          <h2 class="pilihan-buat-cerita">Silahkan Pilih Metode Pembuatan Cerita</h2>
+            <div class="pilihan">
+              <label type="file" class="pdf-btn" id="pdf-btn">
+                  <img src="static/images/pdf.png" alt="" class="pdf-icon">
+              </label>
+              <a href="{% url 'main:create_isi_buku'  %}" class="livewriting-url">
+
+                <button class="livewriting-btn">
+                  <img src="static/images/writing.png" alt="" class="livewriting-icon" >
+                </button>
+              </a>
+            </div>
+        </div>
+
+    </div>
+      
+    
+    
+    <script>
+        function showme(){
+            const fileinput = document.getElementById('select-img')
+            const field_img = document.getElementById('sampul')
+
+            var reader = new FileReader();
+            image = fileinput.files[0]
+            img_src= URL.createObjectURL(image)
+            image.style.display="flex"
+            reader.readAsDataURL(image);
+            field_img.style.opacity = 1
+            console.log(image)
+
+
+            let WIDTH = 800
+            let ratio = WIDTH/image.width
+            let heigth = image.heigth * ratio
+            console.log(image.width)
+           // field_img.width = ratio
+           // field_img.heigth  = heigth
+
+
+            reader.addEventListener('load', ()=>{
+              field_img.src=img_src;
+            })
+
+
+          }
+
+
+
+          function showJudul(){
+            const field_judul  = document.getElementById('judul_buku_view')
+            const judul = document.getElementById('judul')
+            console.log(judul.value)
+            field_judul.innerHTML = judul.value
+          }
+          function showPenulis(){
+            const field_penulis  = document.getElementById('penulis_view')
+            const form = document.getElementById('form')
+
+            const penulis = document.getElementById('penulis')
+            console.log(penulis)
+            field_penulis.innerHTML = penulis.value
+          }
+
+          function showpopup(){
+            const popup = document.getElementById('backpopup')
+            const elemenPopup = document.getElementById('pdf-btn')
+            elemenPopup.innerHTML += '<input  type="file" style="display: none;" >'
+            popup.style.display="flex"
+          }
+
+          async function saveForm(){
+            await fetch(`{% url 'main:create_buku' %}`)
+
+          }
+
+    
+
+          function valueChecking(){
+            const inputs = document.querySelectorAll('input')
+            var isNotEmpty = 0
+            console.log( isNotEmpty)
+            (inputs.forEach(function(elemen){
+              if (elemen.value == ''){
+
+
+                console.log("ini kosong : " + elemen.id )
+              }else{
+                console.log("ini : " + elemen.value )
+                isNotEmpty+=(1);
+                if(isNotEmpty == 8){
+                  showpopup()
+                }
+                
+              }
+              console.log("hasikl : "+ isNotEmpty)
+            
+            }))
+
+
+             
+          }
+          function isNotNull(){
+            const inputs = document.querySelectorAll('input')
+              if (inputs.value == undefined) {
+                return false ;
+              }
+            return true
+
+
+          }
+
+         
+
+    $(document).ready(function () {
+        $('.datepicker').datepicker({
+          format: 'yyyy-mm-dd',
+          autoclose: true
+        })
+      
+        $('.timepicker').timepicker({
+          format: 'hh:ii:ss',
+          autoclose: true,
+          showMeridian: false
+        })
+      
+        $('.datetimepicker').datetimepicker({
+          format: 'YYYY-MM-DD HH:mm:ss',
+          showClear: true
+        })
+      })
+
+
+      
+    </script>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    </body>
+
+{% endblock %}

@@ -1,6 +1,7 @@
 from django.urls import path
 from main.views import *
 from main.views import add_quotes_ajax
+from . import views
 
 app_name = 'main'
 
@@ -25,4 +26,10 @@ urlpatterns = [
     path('preview/<int:id>', show_preview, name='show_preview'),
     path('get-quotes-jason',get_quotes_json,name="get_quotes_json"),
     path('delete-quotes/<int:id>', delete_quotes, name='delete_quotes'),
+    path("create-isi-buku", views.createIsiBuku, name="create_isi_buku"),
+    path("create-isi-buku-baru", views.createIsiBuku, name="create_isi_buku_baru"),
+    path("publish/<int:id_buku>", views.publish, name="publish"),
+    path("create-isi-buku-saved/<int:id_buku>", views.autoSave, name="autoSave"),
+    path("create-buku-baru", views.create_buku_baru, name='create_buku_baru'),
+    
 ]

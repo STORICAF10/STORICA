@@ -1,0 +1,354 @@
+body {
+    height: 0%;
+    background-color: rgb(109, 80, 50);
+}
+
+html {
+    height: 100%;
+    background-color: #313A44;
+}
+
+
+
+.judul_page {
+    margin: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    color: white;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+
+.fields_container {
+    margin: 10px;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    align-items: center;
+}
+
+table {
+    margin-top: 15px;
+    margin-bottom: 15px;
+
+}
+
+td {
+    margin: 10px;
+}
+
+
+.container {
+
+    color: white;
+    border-radius: 15px;
+    width: 100vw;
+
+    margin: 10px;
+    padding: 50px;
+    background-color: #D4BA75;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+label{
+    text-align: right;
+width: 250px;
+
+}
+
+.form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    font-size: 30px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    margin-left: 10%;
+}
+
+input {
+    height: 50px;
+    border-radius: 20px;
+    border: 0px solid rgb(234, 195, 195);
+    margin: 10px;
+    /* background-color: antiquewhite; */
+}
+
+
+#id_gambar {
+    border-radius: 0px;
+    margin: 10px;
+    margin-left: 21%;
+
+
+}
+
+#file-upload-button {
+    height: 70px;
+    border-radius: 20px;
+}
+
+.submit-btn {
+    text-decoration: none;
+    display: flex;
+    margin: 10px;
+    width: 40%;
+}
+
+.formfields {
+    display: flex;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 5px;
+    gap: 40px;
+}
+
+label {
+    justify-content: left;
+    align-items: left;
+}
+
+.input {
+    justify-content: right;
+    align-items: right;
+
+}
+
+
+
+.priview {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 0px;
+    margin-right: 10px;
+    margin-left: 20px;
+    height: 60%;
+    width: 80%;
+    background-color: #FDF5DF;
+    border-radius: 5%;
+    padding: 10px;
+}
+
+.sampul {
+    border-radius: 5%;
+    display: flex;
+    margin-top: 3%;
+    margin-bottom: 3px;
+    width: 60%;
+    height: 30%;
+    opacity: 0.6;
+
+}
+
+.image_container {
+    padding: 0px;
+    margin: 0px;
+    height: min-content;
+}
+
+.book_properties {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    flex-direction: column;
+    gap: 0px;
+    margin: 0px;
+    padding: 0px;
+    
+
+}
+
+.judul_buku {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 30px;
+    margin: 0px;
+    margin-top: 3px;
+    font-style: italic;
+    font-weight: 600;
+    text-align: center;
+
+}
+
+.penulis {
+    margin: 0px;
+    padding-bottom: 10px;
+    text-align: center;
+}
+
+
+.container {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+}
+
+.file_fields {
+    height: 55px;
+}
+
+.profile_icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    border: 1px solid green;
+    transition: all 0.3s;
+
+}
+
+.profile_icon:hover {
+    background-color: rgb(49, 112, 151);
+
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 2px;
+}
+
+
+.select-img{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+}
+
+.tanggal_terbit_fields{
+    margin-top: 15px;
+    padding: 10px;
+    width: 60%;
+}
+
+.warning{
+    color: rgb(64, 64, 64);
+    font-size: 15px;
+    margin-top: 1px;
+}
+
+.next-btn{
+}
+
+.back-btn{
+}
+
+/* POPUP  */
+
+
+.backpopup{
+    border: 3px solid rgb(255, 255, 255);
+    border-radius: 15px;
+    background-color: #102830;
+    position: absolute;
+    top: 20%;
+    right: 0%;
+    left:15%;
+    width: 70%;
+    height: 80%;
+    display: none;
+}
+.popup-frame{
+    background-color: #383832;
+    border-radius: 25px;
+    width: 60%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding-top: 10px;
+    gap: 15%;
+    position: absolute;
+    top: 30%;
+    right: 30%;
+    left: 20%;
+
+}
+
+.pilihan{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    padding: 15px;
+    gap: 15%;
+
+}
+
+
+.pdf-icon {
+    width: 150px;
+    height: 150px;
+
+}
+
+.pilihan-buat-cerita{
+    color: rgb(246, 246, 246);
+}
+
+
+
+.pdf-btn {
+    margin-left: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f4f4f4;
+    border-radius: 20px;
+    width: 300px;
+    height: 200px;
+    transition: all 0.5s;
+    border: 2px solid rgb(135, 135, 135) ;
+
+
+
+}
+.pdf-btn:hover {
+    border: 4px solid black ;
+
+
+    background-color: #dc5847;
+ 
+
+}
+
+.livewriting-url{
+    margin-right: 115px;
+}
+
+.livewriting-btn{
+    background-color: #f4f4f4;
+    border-radius: 20px;
+    margin-right: 20%;
+    width: 175px;
+    height: 200px;
+    display: flex;
+    justify-items: center;
+    align-items: center;
+    transition: all 0.5s;
+    border: 2px solid rgb(135, 135, 135) ;
+
+
+}
+
+.livewriting-btn:hover{
+    background-color: #71dfe9;
+    border: 4px solid black ;
+
+}
+
+
+.livewriting-icon{
+
+    width: 150px;
+    height: 150px;
+}
+
+
