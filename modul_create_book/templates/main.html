@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1 class="my-4">Storica</h1>
+
+    <div class="row">
+        {% for buku in bukus %}
+        <div class="col-lg-2 col-md-3 col-sm-4 col-6 mb-4">
+            <div class="card">
+                <img src="{{ buku.gambar }}" alt="{{ buku.judul }}" class="card-img-top">
+                <div class="card-body">
+                    <h5 class="card-title">{{ buku.judul }}</h5>
+                    <p class="card-text">Author: {{ buku.penulis }}</p>
+                    <p class="card-text">Pages: {{ buku.jumlah_halaman }}</p>
+                    <p class="card-text">Language: {{ buku.bahasa }}</p>
+                    <p class="card-text">Publisher: {{ buku.penerbit }}</p>
+                    <p class="card-text">Rating: {{ buku.rating }}</p>
+                    <p class="card-text">Publish Date: {{ buku.tanggal_terbit }}</p>
+                </div>
+                <a href="{% url 'main:edit_buku' buku.pk %}">
+                    <button>
+                        Edit
+                    </button>
+                </a>
+                <a href="{% url 'main:delete_buku' buku.pk %}">
+                    <button>
+                        Delete
+                    </button>
+                </a>
+            </div>
+        </div>
+        {% if forloop.counter|divisibleby:5 and not forloop.last %}
+    </div>
+    <div class="row">
+        {% endif %}
+        {% endfor %}
+    </div>
+
+    <br />
+    <h5 class="my-4">Sesi terakhir login: {{ last_login }}</h5>
+
+    <a href="{% url 'main:create_buku' %}">
+        <button class="btn btn-primary">Add New Buku</button>
+    </a>
+
+    <a href="{% url 'main:logout' %}">
+        <button class="btn btn-danger">Logout</button>
+    </a>
+</div>
+{% endblock content %}

@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+<body>
+    <nav class="navbar navbar-expand-lg bg-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="{% url 'main:show_main'%}"><strong>STORICA</strong></a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                {% if request.user.is_authenticated %}
+                <a href="{% url 'main:logout' %}">
+                    <button  style= "color: rgb(255, 255, 255);margin-bottom: 5px;background-color: rgb(50, 59, 218);width: 100%; border-radius: 8px;border: none;height: 35px;">
+                        Logout
+                    </button>
+                </a>
+                <a href="{% url 'modul_favorites:show_favorites' %}">
+                    <button  style= "color: rgb(255, 255, 255);margin-bottom: 5px;background-color: rgb(50, 59, 218);width: 100%; border-radius: 8px;border: none;height: 35px;">
+                        Favorites
+                    </button>
+                </a>
+                {% else %}
+                <a href="{% url 'main:register' %}">
+                    <button  style= "color: rgb(255, 255, 255);margin-bottom: 5px;background-color: rgb(50, 59, 218);width: 100%; border-radius: 8px;border: none;height: 35px;">
+                        Register
+                    </button>
+                </a>
+                <a href="{% url 'main:login' %}">
+                    <button  style= "color: rgb(255, 255, 255);margin-bottom: 5px;background-color: rgb(50, 59, 218);width: 100%; border-radius: 8px;border: none;height: 35px;">
+                        Login
+                    </button>
+                </a>
+                {% endif %}
+              </li>
+            </ul>
+          </div>
+          <p style="color:black;font-size:18px;" align="right"><strong>User: {{request.user.username}}</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+        </div>
+    </nav>
+    {% block content %}
+    {% endblock content %}
+</body>
+
+</html>
