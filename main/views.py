@@ -52,6 +52,7 @@ def show_main(request):
         
         else:
             tingkatan = level(user=request.user,level=0,buku_total=0,batas_atas=5,persen=0)
+            tingkatan.save()
         
         context = {
             'persen':100*tingkatan.buku_total/tingkatan.batas_atas,
@@ -128,10 +129,6 @@ def filter_bintang_empat(request):
     if ('last_login' in request.COOKIES):
         if(hasattr(request,'level')):
             tingkatan = level.objects.get(user=request.user)
-        
-        else:
-            tingkatan = level(user=request.user,level=0,buku_total=0,batas_atas=5,persen=0)
-              
         context = {
             'persen':100*tingkatan.buku_total/tingkatan.batas_atas,
             'tingkatan':tingkatan,            
@@ -155,11 +152,7 @@ def filter_bahasa_inggris(request):
     
     if ('last_login' in request.COOKIES):
         if(hasattr(request,'level')):
-            tingkatan = level.objects.get(user=request.user)
-        
-        else:
-            tingkatan = level(user=request.user,level=0,buku_total=0,batas_atas=5,persen=0)
-        
+            tingkatan = level.objects.get(user=request.user)        
         context = {
             'persen':100*tingkatan.buku_total/tingkatan.batas_atas,
             'tingkatan':tingkatan,            
@@ -183,10 +176,6 @@ def filter_buku_karya(request):
     if ('last_login' in request.COOKIES):
         if(hasattr(request,'level')):
             tingkatan = level.objects.get(user=request.user)
-        
-        else:
-            tingkatan = level(user=request.user,level=0,buku_total=0,batas_atas=5,persen=0)
-        
         context = {
             'persen':100*tingkatan.buku_total/tingkatan.batas_atas,
             'tingkatan':tingkatan,            
@@ -224,7 +213,7 @@ def show_xml(request):
 
 
 def show_json(request):
-    data = Buku.objects.all()
+    data = level.objects.all()
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
 
 
