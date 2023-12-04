@@ -28,6 +28,12 @@ SECRET_KEY = 'django-insecure-og0+y#zvlvjoa-h6a)x0@b#v^=14ys7cpe1(rcxqsn5!1r#2*l
 DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SAMESITE = 'None'
+SESSION_COOKIE_SAMESITE = 'None'
 
 
 # Application definition
@@ -42,7 +48,9 @@ INSTALLED_APPS = [
     'main',
     'modul_baca',
     'modul_preview',
-    'modul_favorites'
+    'modul_favorites',
+    'authentication',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
@@ -53,6 +61,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'storica.urls'
