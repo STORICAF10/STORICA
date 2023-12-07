@@ -29,6 +29,7 @@ urlpatterns = [
     path('edit-buku/<int:id>', edit_buku, name='edit_buku'),
     path('delete/<int:id>', delete_buku, name='delete_buku'),
     path('preview/<int:id>', show_preview, name='show_preview'),
+    path('preview-kreasi/<int:id>', show_preview_kreasi, name='show_preview_kreasi'),
     path('get-quotes-jason',get_quotes_json,name="get_quotes_json"),
     path('delete-quotes/<int:id>', delete_quotes, name='delete_quotes'),
     path("create-isi-buku", views.createIsiBuku, name="create_isi_buku"),
@@ -36,5 +37,4 @@ urlpatterns = [
     path("publish/<int:id_buku>", views.publish, name="publish"),
     path("create-isi-buku-saved/<int:id_buku>", views.autoSave, name="autoSave"),
     path("create-buku-baru", views.create_buku_baru, name='create_buku_baru'),
-    
 ]

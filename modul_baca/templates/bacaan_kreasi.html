@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block meta %}
+    <title>{{ buku.judul }}</title>
+{% endblock meta %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="card book-card" style="background-color: rgba(92, 91, 91, 0.315);">
+            <div class="card-header">
+                <ul class="nav nav-tabs card-header-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{% url 'modul_preview:show_bacaan_kreasi' karya.pk %}" style="background-color: burlywood; color: white;"><b>Baca</b></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'modul_baca:show_create_komentar_kreasi' karya.pk %}" tabindex="-1" style="color: gray;"><b>Komentar</b></a>
+                    </li>
+                </ul>
+            </div>
+            <div class="card-body">
+                <h3 class="card-title text-center" style="margin-bottom: 6vh; margin-inline: 14vh; color: white;"><b>{{ karya.judul }}</b></h3>
+                <p class="card-text">
+                    <textarea class="form-control" style="text-align: justify; resize: none; height: 55vh;" readonly>{{ karya.isi_buku }}</textarea>
+                </p>
+            </div>
+        </div>
+    </div>
+        <a href="{% url 'main:show_preview_kreasi' karya.pk %}" class="btn btn-primary mt-3"
+        style="background-color: burlywood; margin-bottom: 8vh;"><b>⏪ Back to Preview</b></a>
+</div>
+{% endblock content %}
