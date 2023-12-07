@@ -19,6 +19,7 @@ from django.http import HttpResponseNotFound
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 from django.shortcuts import get_object_or_404
+from django.core.files.storage.filesystem import FileSystemStorage
 
 def get_buku_json(request):
     buku = Buku.objects.all().order_by('jumlah_review')
@@ -212,8 +213,31 @@ def show_xml(request):
     return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
 
 
-def show_json(request):
-    data = level.objects.all()
+def show_buku_json(request):
+    data = Buku.objects.all()
+    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+
+def show_buku_kreasi_json(request):
+    data = BukuKreasi.objects.all()
+    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+
+def show_quotes_json(request):
+    data = BukuKreasi.objects.all()
+    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+
+def show_profile_json(request):
+    user = request.user
+    data = profile.objects.filter(user=user)
+    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+
+def show_level_json(request):
+    user = request.user
+    data = level.objects.filter(user=user)
+    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+
+def show_my_quotes_json(request):
+    user = request.user
+    data = quotes.objects.filter(user=user)
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
 
 
