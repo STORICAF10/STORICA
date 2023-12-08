@@ -5,6 +5,8 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from modul_baca.forms import KomentarForm, KomentarKreasiForm
 from django.http import HttpResponseRedirect
+from django.http import HttpResponse
+from django.core import serializers
 
 
 @login_required(login_url='/login')
@@ -43,3 +45,13 @@ def show_create_komentar_kreasi(request, buku_id):
         form = KomentarKreasiForm()
 
     return render(request, 'komentar_kreasi.html', {'karya': buku, 'komentars': komentar, 'form': form})
+
+
+def json_komentar(request, buku_id):
+    komentar_buku = Buku.objects.get(pk=buku_id).komentar.all()
+    return HttpResponse(serializers.serialize("json", komentar_buku))
+
+
+def json_komentar_kreasi(request, buku_id):
+    komentar_buku_kreasi = BukuKreasi.objects.get(pk=buku_id).komentar.all()
+    return HttpResponse(serializers.serialize("json", komentar_buku_kreasi))
