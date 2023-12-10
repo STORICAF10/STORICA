@@ -91,7 +91,7 @@
     
                     </td>
                     <td class="fields">
-                        <input  type="file" accept="image/*" id="select-img" class="select-img"  onchange="showme()">
+                        <input  type="text" id="select-img" class="select-img"  onchange="showme()" placeholder="Masukan URL Gambar">
                         
                     </td>
                 </tr>
@@ -113,7 +113,7 @@
     
         <div class="priview">
     
-                <img  alt="sampul" class="sampul" id ="sampul" style="display: none;">
+                <img  alt="sampul" class="sampul" id ="sampul" style="display: none;" src="">
                 <p class="warning">1920 X 1080</p>
             <div class="book_properties">
                     <p class="judul_buku" id ="judul_buku_view">Judul Buku</p>
@@ -152,29 +152,32 @@
     
     <script>
         function showme(){
-            const fileinput = document.getElementById('select-img')
-            const field_img = document.getElementById('sampul')
+            const fileinput = document.getElementById('select-img');
+            const field_img = document.getElementById('sampul');
+            //  var reader = new FileReader();
+            //   image = fileinput.files[0]
+            img_src= fileinput.value;
+            console.log(img_src);
+            field_img.style.display="flex"
+            field_img.src=img_src;
 
-            var reader = new FileReader();
-            image = fileinput.files[0]
-            img_src= URL.createObjectURL(image)
-            image.style.display="flex"
-            reader.readAsDataURL(image);
+            //reader.readAsDataURL(image);//
             field_img.style.opacity = 1
-            console.log(image)
+            console.log(img_src);
+            console.log("okwee");
 
 
-            let WIDTH = 800
-            let ratio = WIDTH/image.width
-            let heigth = image.heigth * ratio
-            console.log(image.width)
+            //let WIDTH = 800
+          //  let ratio = WIDTH/image.width
+          //  let heigth = image.heigth * ratio
+           // console.log(image.width)
            // field_img.width = ratio
            // field_img.heigth  = heigth
 
 
-            reader.addEventListener('load', ()=>{
-              field_img.src=img_src;
-            })
+            //.addEventListener('load', ()=>{
+            //  field_img.src=img_src;
+          //  })
 
 
           }
@@ -196,12 +199,12 @@
             field_penulis.innerHTML = penulis.value
           }
 
-          function showpopup(){
-            const popup = document.getElementById('backpopup')
-            const elemenPopup = document.getElementById('pdf-btn')
-            elemenPopup.innerHTML += '<input  type="file" style="display: none;" >'
-            popup.style.display="flex"
-          }
+       //   function showpopup(){
+           // const popup = document.getElementById('backpopup')
+         //   const elemenPopup = document.getElementById('pdf-btn')
+          //  elemenPopup.innerHTML += '<input  type="file" style="display: none;" >'
+          //  popup.style.display="flex"
+       //   }
 
           async function saveForm(){
             await fetch(`{% url 'main:create_buku' %}`)

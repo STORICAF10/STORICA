@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block meta %}
+<title>Preview</title>
+{% endblock meta %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-6">
+            <img src="{{ karya.gambar }}" alt="{{ karya.judul }}" class="img-fluid card-img-top">
+        </div>
+        <div class="col-md-6">
+            <h2>{{ karya.judul }}</h2>
+            <p>{{ karya.description }}</p>
+            <a href="{% url 'modul_preview:show_bacaan_kreasi' karya.pk %}" class="btn btn-primary">
+                Baca Buku
+            </a>
+            <a href="{% url 'main:show_main'%}" class="btn btn-primary">
+                Back to Home
+            </a>
+            <a href="{% url 'main:delete_buku' karya.pk%}" class="btn btn-danger">
+                Delete
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock content %}

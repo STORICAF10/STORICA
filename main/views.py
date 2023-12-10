@@ -366,7 +366,6 @@ def createIsiBuku(request):
     buku = BukuKreasi.objects.filter(user=request.user)
     form = BukuForm(request.POST, request.FILES)
 
-    print("Masuk baNag okk createisibuku")
     if request.method == "POST":
         if form.is_valid():
             isi_buku = request.POST.get("isi_buku")
@@ -375,7 +374,6 @@ def createIsiBuku(request):
                 buku.is_published = False
                 buku = form.save(commit=False)
                 buku.save()
-                print(buku.judul)
                 form.save()
                 return HttpResponseRedirect(
                     reverse("main:autoSave", kwargs={"id_buku": buku.id})
@@ -417,11 +415,8 @@ def autoSave(request, id_buku):
 
 def publish(request, id_buku):
     buku = BukuKreasi.objects.get(id=id_buku)
-    print("masuk Publish")
     buku.is_published = True
-    print(buku.is_published)
     buku.save()
-    print(buku.isi_buku + " uye")
     return HttpResponseRedirect(reverse("main:show_main"))
 
     # print(form.isi_buku)
