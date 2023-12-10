@@ -8,7 +8,7 @@ from django.core import serializers
 from django.shortcuts import redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages  
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 import datetime
@@ -19,6 +19,7 @@ from django.http import HttpResponseNotFound
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 from django.shortcuts import get_object_or_404
+import json
 
 def get_buku_json(request):
     buku = Buku.objects.all().order_by('jumlah_review')
@@ -38,7 +39,32 @@ def show_semua(request):
     }
     return render(request, "semuabuku.html", context)
     
+@csrf_exempt
+def login(request):
+    username = request.POST['username']
+    password = request.POST['password']
+    user = authenticate(username=username, password=password)
+    if user is not None:
+        if user.is_active:
+            auth_login(request, user)
+            # Status login sukses.
+            return JsonResponse({
+                "username": user.username,
+                "status": True,
+                "message": "Login sukses!"
+                # Tambahkan data lainnya jika ingin mengirim data ke Flutter.
+            }, status=200)
+        else:
+            return JsonResponse({
+                "status": False,
+                "message": "Login gagal, akun dinonaktifkan."
+            }, status=401)
 
+    else:
+        return JsonResponse({
+            "status": False,
+            "message": "Login gagal, periksa kembali email atau kata sandi."
+        }, status=401)
 def show_main(request):
     karya_pengguna = BukuKreasi.objects.all().order_by('jumlah_review').filter(is_published = True)
     bukus = Buku.objects.all().order_by('jumlah_review')
@@ -222,7 +248,7 @@ def show_xml(request):
     data = Buku.objects.all()
     return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
 
-
+@csrf_exempt
 def show_json(request):
     data = Buku.objects.all()
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
@@ -312,6 +338,29 @@ def get_quotes_json(request):
     return HttpResponse(serializers.serialize('json', katabijak))
 
 
+@csrf_exempt
+def post_buku_kreasi(request):
+    if request.method=='POST':
+        data = json.loads(request.body)
+        
+        new_req = BukuKreasi.objects.create(
+            user = request.user,
+            judul = data['judul'],
+            jumlah_halaman = data['jumlah_halaman'],
+            penerbit = data['penerbit'],
+            bahasa = data['bahasa'],
+            gambar = data['gambar'],
+            tanggal_terbit = data['tanggal_terbit']
+            
+        )
+        new_req.save()
+        return JsonResponse({"status":"success"},status =200)
+    else:
+        return JsonResponse({"status":"error"},status =401)
+        
+def show_json_bukuKreasi(request):
+    buku_kreasi = BukuKreasi.objects.all()
+    return HttpResponse(serializers.serialize("json", buku_kreasi), content_type = "application/json")
 
 def createIsiBuku(request):
     buku = BukuKreasi.objects.filter(user=request.user)
