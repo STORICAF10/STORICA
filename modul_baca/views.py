@@ -76,3 +76,23 @@ def create_komentar_flutter(request):
         return JsonResponse({"status": "success"}, status=200)
     else:
         return JsonResponse({"status": "error"}, status=401)
+
+
+@csrf_exempt
+def create_komentar_kreasi_flutter(request):
+    if request.method == 'POST':
+        
+        data = json.loads(request.body)
+        buku = BukuKreasi.objects.get(pk=data["dari_buku"])
+
+        new_komentar = KomentarKreasi.objects.create(
+            isi_komentar = data["isi_komentar"],
+            rating = int(data["rating"]),
+            dari_buku = buku,
+        )
+
+        new_komentar.save()
+
+        return JsonResponse({"status": "success"}, status=200)
+    else:
+        return JsonResponse({"status": "error"}, status=401)
