@@ -16,7 +16,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponseNotFound
-from django.core.files.storage.filesystem import FileSystemStorage
+from django.core.files.storage import FileSystemStorage
 from django.core.exceptions import ObjectDoesNotExist
 
 
