@@ -350,14 +350,16 @@ def post_buku_kreasi(request):
             penerbit = data['penerbit'],
             bahasa = data['bahasa'],
             gambar = data['gambar'],
-            tanggal_terbit = data['tanggal_terbit']
+            tanggal_terbit = data['tanggal_terbit'],
+            is_published = data['is_published']
             
         )
         new_req.save()
         return JsonResponse({"status":"success"},status =200)
     else:
         return JsonResponse({"status":"error"},status =401)
-        
+      
+@csrf_exempt  
 def show_json_bukuKreasi(request):
     buku_kreasi = BukuKreasi.objects.all()
     return HttpResponse(serializers.serialize("json", buku_kreasi), content_type = "application/json")
