@@ -17,6 +17,7 @@ urlpatterns = [
     path('create-buku', create_buku, name='create_buku'),
     path('xml/', show_xml, name='show_xml'), 
     path('buku-json/', show_buku_json, name='show_buku_json'),
+    path('bukutrending-json/', show_trending_json, name='show_trending_json'),
     path('bukukreasi-json/', show_buku_kreasi_json, name='show_bukukreasi_json'),
     path('myquotes-json/', show_my_quotes_json, name='show_myquotes_json'),
     path('profile-json/', show_profile_json, name='show_profile_json'), 
