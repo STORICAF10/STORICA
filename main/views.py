@@ -251,6 +251,14 @@ def show_level_json(request):
         serializers.serialize("json", data), content_type="application/json"
     )
 
+def show_trending_json(request):
+    
+    data = Buku.objects.all().order_by('jumlah_review')[0:10]
+    
+    return HttpResponse(
+        serializers.serialize("json", data), content_type="application/json"
+    )
+
 
 def show_my_quotes_json(request):
     user = request.user
