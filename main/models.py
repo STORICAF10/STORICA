@@ -25,7 +25,7 @@ class BukuKreasi(models.Model):
     gambar = models.URLField(null=True, blank=True)
     tanggal_terbit = models.DateField(null=True, blank=True)
     is_published = models.BooleanField()
-    isi_buku = models.TextField(null="",blank="")
+    isi_buku = models.TextField(null="",blank="",help_text="Ceritakan Kisahmu...")
 
 
     # Representasi teks model 

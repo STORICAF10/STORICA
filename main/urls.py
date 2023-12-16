@@ -31,5 +31,8 @@ urlpatterns = [
     path("publish/<int:id_buku>", views.publish, name="publish"),
     path("create-isi-buku-saved/<int:id_buku>", views.autoSave, name="autoSave"),
     path("create-buku-baru", views.create_buku_baru, name='create_buku_baru'),
+    path("post-buku-kreasi", views.post_buku_kreasi, name='post_buku_kreasi'),
+    path("post-buku-kreasi-json", views.show_json_bukuKreasi, name='post_buku_kreasi_json'),
+    path('login-flutter/', login, name='login_flutter'),
     
 ]
