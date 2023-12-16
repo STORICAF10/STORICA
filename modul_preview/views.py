@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from main.models import Buku, BukuKreasi
+from main.models import Buku
 from main.forms import BukuForm
 from django.urls import reverse
 from django.http import HttpResponse
@@ -23,12 +23,3 @@ def show_bacaan(request, id):
         'buku': buku,
     }
     return render(request, "bacaan.html", context)
-
-
-@login_required(login_url='/login')
-def show_bacaan_kreasi(request, id):
-    karya = BukuKreasi.objects.get(pk = id)
-    context = {
-        'karya': karya,
-    }
-    return render(request, "bacaan_kreasi.html", context)

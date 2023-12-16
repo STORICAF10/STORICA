@@ -13,7 +13,7 @@ def show_favorites(request):
     buku = request.user.buku_set.all()
     print(buku)
     context = {
-        'buku': buku,
+        'karya': buku,
     }
     return render(request, "show_favorites.html", context)
 

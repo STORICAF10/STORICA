@@ -8,7 +8,7 @@
 <div class="container mt-5">
     <h2>Your Favorite Books</h2>
     <div class="row">
-        {% for book in buku %}
+        {% for book in karya %}
         <div class="col-md-4">
             <a href="{% url 'main:show_preview' book.pk %}"> 
             <div class="card mb-4">

@@ -12,8 +12,6 @@ class Buku(models.Model):
     gambar = models.URLField(null=True, blank=True)
     tanggal_terbit = models.DateField(null=True, blank=True)
     buku_favorites = models.ManyToManyField(User)
-    isi_buku = models.TextField(default="Sayangnya buku ini belum tersedia :(, silahkan coba buku lainnya")
-
 
 class BukuKreasi(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE,null=True,blank=True)
@@ -27,7 +25,7 @@ class BukuKreasi(models.Model):
     gambar = models.URLField(null=True, blank=True)
     tanggal_terbit = models.DateField(null=True, blank=True)
     is_published = models.BooleanField()
-    isi_buku = models.TextField(null="",blank="")
+    isi_buku = models.TextField(null="",blank="",help_text="Ceritakan Kisahmu...")
 
 
     # Representasi teks model 
@@ -45,7 +43,3 @@ class level(models.Model):
 class quotes(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     kata_kata = models.TextField()
-
-class profile(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    gambar = models.URLField(null=True, blank=True)

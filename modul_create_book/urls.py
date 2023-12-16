@@ -3,7 +3,7 @@ from main.views import (
     show_main,
     create_buku,
     show_xml,
-    show_buku_json,
+    show_json,
     show_xml_by_id,
     show_json_by_id,
 )
@@ -24,7 +24,7 @@ urlpatterns = [
     path("publish/<int:id_buku>", views.publish, name="publish"),
     path("create-isi-buku-saved/<int:id_buku>", views.autoSave, name="autoSave"),
     path("xml/", show_xml, name="show_xml"),
-    path("json/", show_buku_json, name="show_json"),
+    path("json/", show_json, name="show_json"),
     path("xml/<int:id>/", show_xml_by_id, name="show_xml_by_id"),
     path("json/<int:id>/", show_json_by_id, name="show_json_by_id"),
     path("register/", register, name="register"),

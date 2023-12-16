@@ -24,5 +24,4 @@ urlpatterns = [
     path('favorites/', include('modul_favorites.urls')),
     path('create-buku/create-buku', include('modul_create_book.urls')),
     path('admin/', admin.site.urls),
-    path('auth/', include('authentication.urls')),
 ]
