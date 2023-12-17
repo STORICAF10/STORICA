@@ -34,5 +34,13 @@ urlpatterns = [
     path("post-buku-kreasi", views.post_buku_kreasi, name='post_buku_kreasi'),
     path("post-buku-kreasi-json", views.show_json_bukuKreasi, name='post_buku_kreasi_json'),
     path('login-flutter/', login, name='login_flutter'),
+    path('buku-json/', show_buku_json, name='show_buku_json'),
+    path('bukutrending-json/', show_trending_json, name='show_trending_json'),
+    path('bukukreasi-json/', show_buku_kreasi_json, name='show_bukukreasi_json'),
+    path('myquotes-json/', show_my_quotes_json, name='show_myquotes_json'),
+    #path('profile-json/', show_profile_json, name='show_profile_json'), 
+    path('quotes-json/', show_quotes_json, name='show_quotes_json'),
+    path('level-json/', show_level_json, name='show_level_json'),
+    path('preview-kreasi/<int:id>', show_preview_kreasi, name='show_preview_kreasi'),
     
 ]

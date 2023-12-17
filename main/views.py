@@ -20,6 +20,10 @@ from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 from django.shortcuts import get_object_or_404
 import json
+from django.contrib import messages
+from django.contrib.auth import authenticate, login
+from django.core.files.storage import FileSystemStorage
+from django.core.exceptions import ObjectDoesNotExist
 
 def get_buku_json(request):
     buku = Buku.objects.all().order_by('jumlah_review')
@@ -282,7 +286,7 @@ def login_user(request):
         password = request.POST.get('password')
         user = authenticate(request, username=username, password=password)
         if user is not None:
-            login(request, user)
+            auth_login(request, user)
             response = HttpResponseRedirect(reverse("main:show_main")) 
             response.set_cookie('last_login', str(datetime.datetime.now()))
             return response
@@ -437,3 +441,61 @@ def showCover(request):
         url = fs.url(name)
         print(url)
     return HttpResponseRedirect(reverse("main:show_main"))
+
+def show_buku_json(request):
+    data = Buku.objects.all()
+    return HttpResponse(
+        serializers.serialize("json", data), content_type="application/json"
+    )
+
+
+def show_buku_kreasi_json(request):
+    data = BukuKreasi.objects.all()
+    return HttpResponse(
+        serializers.serialize("json", data), content_type="application/json"
+    )
+
+
+def show_quotes_json(request):
+    data = BukuKreasi.objects.all()
+    return HttpResponse(
+        serializers.serialize("json", data), content_type="application/json"
+    )
+
+
+# def show_profile_json(request):
+    user = request.user
+    data = profile.objects.filter(user=user)
+    return HttpResponse(
+        serializers.serialize("json", data), content_type="application/json"
+    )
+
+
+def show_level_json(request):
+    user = request.user
+    data = level.objects.filter(user=user)
+    return HttpResponse(
+        serializers.serialize("json", data), content_type="application/json"
+    )
+
+def show_trending_json(request):
+
+    data = Buku.objects.all().order_by('jumlah_review')[0:10]
+
+    return HttpResponse(
+        serializers.serialize("json", data), content_type="application/json"
+    )
+
+
+def show_my_quotes_json(request):
+    user = request.user
+    data = quotes.objects.filter(user=user)
+    return HttpResponse(
+        serializers.serialize("json", data), content_type="application/json"
+    )
+def show_preview_kreasi(request, id):
+    karya = BukuKreasi.objects.get(pk=id)
+    context = {
+        "karya": karya,
+    }
+    return render(request, "preview_kreasi.html", context)
