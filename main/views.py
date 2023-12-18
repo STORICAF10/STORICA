@@ -24,7 +24,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.core.files.storage import FileSystemStorage
 from django.core.exceptions import ObjectDoesNotExist
-
+from django.db.models import Q
 def get_buku_json(request):
     buku = Buku.objects.all().order_by('jumlah_review')
     return HttpResponse(serializers.serialize('json', buku))
@@ -457,45 +457,98 @@ def show_buku_kreasi_json(request):
 
 
 def show_quotes_json(request):
-    data = BukuKreasi.objects.all()
+    data = quotes.objects.all()
     return HttpResponse(
         serializers.serialize("json", data), content_type="application/json"
     )
 
 
-# def show_profile_json(request):
+def show_profile_json(request):
     user = request.user
-    data = profile.objects.filter(user=user)
-    return HttpResponse(
-        serializers.serialize("json", data), content_type="application/json"
-    )
-
-
-def show_level_json(request):
-    user = request.user
-    data = level.objects.filter(user=user)
+    try:
+        data = profile.objects.get(user=user)
+    except:
+        data = profile(user,"")
     return HttpResponse(
         serializers.serialize("json", data), content_type="application/json"
     )
 
 def show_trending_json(request):
-
     data = Buku.objects.all().order_by('jumlah_review')[0:10]
-
     return HttpResponse(
         serializers.serialize("json", data), content_type="application/json"
     )
 
+def show_inggris_json(request):
 
-def show_my_quotes_json(request):
-    user = request.user
+    data = Buku.objects.filter(Q(bahasa="eng")|Q(bahasa="en-US"))
+    return HttpResponse(
+        serializers.serialize("json", data), content_type="application/json"
+    )
+
+def show_my_quotes_json(request,nama):
+    user = User.objects.get(username=nama)
+    #angka = user.id
     data = quotes.objects.filter(user=user)
     return HttpResponse(
         serializers.serialize("json", data), content_type="application/json"
     )
+def show_toprate_json(request):
+    data = Buku.objects.filter(rating__gt=4)
+    return HttpResponse(
+        serializers.serialize("json", data), content_type="application/json"
+    )
+
+def show_buku_kreasiku_json(request,nama):
+    user = User.objects.get(username=nama)
+    data = BukuKreasi.objects.filter(user=user)
+    return HttpResponse(
+        serializers.serialize("json", data), content_type="application/json"
+    )
+
 def show_preview_kreasi(request, id):
     karya = BukuKreasi.objects.get(pk=id)
     context = {
         "karya": karya,
     }
     return render(request, "preview_kreasi.html", context)
+@csrf_exempt
+def create_Quotes_flutter(request):
+    if request.method == 'POST':
+        pemakai = request.POST.get('username')
+        user = User.objects.get(username=pemakai)
+        new_quotes = quotes.objects.create(
+            user = user, 
+            kata_kata = request.POST.get('kata_kata')
+        )
+
+        new_quotes.save()
+
+        return JsonResponse({"status": "success"}, status=200)
+    else:
+        return JsonResponse({"status": "error"}, status=401)
+    
+@csrf_exempt
+def ganti_Profil_flutter(request):
+    if request.method == 'POST':
+        
+        data = json.loads(request.body)
+        user = User.objects.get(username= data['pengguna'])
+        gambar = data["gambar"]
+        profile_lama = profile.objects.get(user=user)
+        profile_lama.delete()
+
+        new_profile = profile.objects.create(
+            user = user,
+            gambar = gambar
+        )
+        new_profile.save()
+        print(gambar)
+        return JsonResponse({"status": "success","gambar":gambar}, status=200)
+    else:
+        return JsonResponse({"status": "error"}, status=401)
+
+def hapus_quotes(request,id):
+    katabijak = quotes.objects.get(pk = id)
+    katabijak.delete()    
+    return JsonResponse({"status": "success"}, status=200)

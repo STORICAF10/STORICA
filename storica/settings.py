@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'modul_baca',
     'modul_preview',
     'modul_favorites',
-    'corsheaders'
+    'corsheaders',
+    'authentication'
 ]
 
 MIDDLEWARE = [

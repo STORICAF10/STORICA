@@ -37,10 +37,14 @@ urlpatterns = [
     path('buku-json/', show_buku_json, name='show_buku_json'),
     path('bukutrending-json/', show_trending_json, name='show_trending_json'),
     path('bukukreasi-json/', show_buku_kreasi_json, name='show_bukukreasi_json'),
-    path('myquotes-json/', show_my_quotes_json, name='show_myquotes_json'),
-    #path('profile-json/', show_profile_json, name='show_profile_json'), 
+    path('myquotes-json/<str:nama>', show_my_quotes_json, name='show_myquotes_json'),
     path('quotes-json/', show_quotes_json, name='show_quotes_json'),
-    path('level-json/', show_level_json, name='show_level_json'),
     path('preview-kreasi/<int:id>', show_preview_kreasi, name='show_preview_kreasi'),
-    
+    path('bukubing-json/',show_inggris_json,name='show_inggris_json'),
+    path('bukutop-json/',show_toprate_json,name="show_bukutop_json"),
+    path('create-quote/',create_Quotes_flutter,name='create_quotes'),
+    path('ganti-profil/',ganti_Profil_flutter,name='ganti_profil'),
+    path('hapus-quote/<int:id>',hapus_quotes,name='hapus_quotes'),
+    path('kreasiku-json/<str:nama>',show_buku_kreasiku_json,name='kreasiku_json')
+
 ]

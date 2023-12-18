@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login as auth_login
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import logout as auth_logout
+from main.models import profile
 
 @csrf_exempt
 def login(request):
@@ -10,14 +11,20 @@ def login(request):
     password = request.POST['password']
     user = authenticate(username=username, password=password)
     if user is not None:
+    
         if user.is_active:
             auth_login(request, user)
-            # Status login sukses.
+            try:
+                data = profile.objects.get(user=user)
+            except:
+                data = profile(user=user,gambar="")
+                data.save()
             return JsonResponse({
                 "username": user.username,
                 "status": True,
-                "message": "Login sukses!"
-                # Tambahkan data lainnya jika ingin mengirim data ke Flutter.
+                "message": "Login sukses!",
+                 "gambar": data.gambar
+                
             }, status=200)
         else:
             return JsonResponse({
