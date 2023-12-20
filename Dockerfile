@@ -22,6 +22,8 @@ RUN pip install -r /requirements.txt
 # Copy project code
 COPY . .
 
+RUN python manage.py makemigrations
+RUN python manage.py migrate
 RUN python manage.py collectstatic --noinput --clear
 
 # Run as non-root user
