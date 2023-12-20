@@ -147,7 +147,7 @@ def add_quotes_ajax(request):
 
         return HttpResponse(b"CREATED", status=201)
 
-    #return HttpResponseNotFound()
+    return HttpResponseNotFound()
 
 def filter_bintang_empat(request):
     karya_pengguna = BukuKreasi.objects.all().order_by('jumlah_review').filter(is_published = True).filter(rating__gt=4)
