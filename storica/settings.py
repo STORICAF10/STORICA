@@ -142,7 +142,7 @@ SESSION_COOKIE_DOMAIN = None
 CSRF_COOKIE_DOMAIN = 'mydomain.ir'
 if os.environ.get("IS_SERVER", "False") == "True":
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-ALLOWED_HOSTS = ["*","http://localhost:61979"]
+ALLOWED_HOSTS = ["*"]
 CORS_ALLOW_HEADERS = ['*']
 SESSION_COOKIE_HTTPONLY = False
 CORS_ORIGIN_ALLOW_ALL = True
