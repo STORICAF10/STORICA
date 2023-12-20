@@ -354,8 +354,7 @@ def post_buku_kreasi(request):
             bahasa = data['bahasa'],
             gambar = data['gambar'],
             tanggal_terbit = data['tanggal_terbit'],
-            is_published = data['is_published']
-            
+            is_published = data['is_published'],            
         )
         new_req.save()
         return JsonResponse({"status":"success"},status =200)
