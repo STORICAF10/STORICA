@@ -4,6 +4,9 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import logout as auth_logout
 from main.models import profile
+import json
+from django.db.utils import IntegrityError
+from main.models import *
 
 @csrf_exempt
 def login(request):
@@ -54,3 +57,25 @@ def logout(request):
         "status": False,
         "message": "Logout gagal."
         }, status=401)
+
+@csrf_exempt
+def app_register(request):
+    try:
+       
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+        confirm = request.POST.get("confirm")
+        print(username)
+        print(password)
+        print(confirm)
+
+        if password != confirm:
+            return JsonResponse({'status': 'failed', 'message': 'Password tidak sesuai'})
+
+        new_user = User.objects.create_user(username = username, password = password)
+        new_user.save()
+        return JsonResponse({"status": "success","username":username,}, status=200)
+    except IntegrityError:
+        return JsonResponse({"status": "error", 'message':'Username sudah digunakan.'}, status=401)
+    except:
+        return JsonResponse({"status": "error", 'message':'Terjadi error, pastikan jumlah karakter tidak lebih dari 150 dan hanya mengandung angka dan huruf.'}, status=401)
