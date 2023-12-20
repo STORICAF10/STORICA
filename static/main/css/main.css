@@ -1,0 +1,102 @@
+.buttonbuku{
+    border:none;
+    padding:0;
+    width: 300px; 
+    height: 400px;
+    overflow: hidden; 
+    border-radius: 35px; 
+    position: relative;
+}
+.buttonbukukecil{
+    border:none;
+    padding: 0;
+    width: 150px;
+    height: 200px;
+    overflow: hidden; 
+    border-radius: 15px; 
+    position: relative;
+}
+
+
+.carousel-inner{
+    height: 400px;
+    width: 300px;
+}
+
+
+.penampungjudul{
+    
+    padding-right: 20px;
+    position: absolute; 
+    width: 100%; 
+    height: 20%; 
+    bottom: 0; 
+    left: 0; 
+    background-color: #24000090;
+}
+
+#indikatorlingkaran{
+    position: relative;
+    bottom: -20px;
+    border-radius: 50%; 
+    height: 7px;
+    width: 7px;
+}
+
+#carouselindicator{
+    padding:0;
+    height: 400px;
+    width: 300px;
+}
+
+#sampulbuku{
+    margin:0;
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover;
+}
+
+#cover{
+    color:whitesmoke;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+#untukbuku{
+    height: 40vh;
+}
+#untukkatabijak{
+    max-height: 30vh;
+    height: 30vh;
+}
+#sampulkecil{
+    width: 150px;
+    height: 200px;
+    border-radius: 15px;
+}
+
+#coverkecil{
+    color:whitesmoke;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.smallfont li{
+    font-size: 8px;
+    color:whitesmoke;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.container{
+     margin-top:0px;
+     margin-bottom:0px
+}
+
+
+
+
+
+
