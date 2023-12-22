@@ -31,7 +31,7 @@
                             {% if forloop.counter0 == 0 %}
                                 
                                 <div class="carousel-item active">
-                                    <a href = "{% url 'main:show_preview' karya.pk %}">
+                                    <a href = "{% url 'main:show_preview_kreasi' karya.pk %}">
                                     <button class="buttonbuku">
                                         <img src="{{karya.gambar}}" id="sampulbuku" alt="...">
                                         <div class="penampungjudul">
@@ -45,7 +45,7 @@
                                 </div>
                             {% else %}
                                 <div class="carousel-item">
-                                    <a href = "{% url 'main:show_preview' karya.pk %}">
+                                    <a href = "{% url 'main:show_preview_kreasi' karya.pk %}">
                                     <button class="buttonbuku">
                                         <img src="{{karya.gambar}}" id="sampulbuku" alt="...">
                                         <div class="penampungjudul">
